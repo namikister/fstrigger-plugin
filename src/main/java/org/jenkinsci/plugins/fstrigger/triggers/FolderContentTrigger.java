@@ -278,6 +278,19 @@ public class FolderContentTrigger extends AbstractTrigger {
         return CAUSE;
     }
 
+    private int getNumFiles(final Map<String, FileInfo> md5Map) throws XTriggerException {
+        int num = 0;
+        for (Map.Entry<String, FileInfo> entry : md5Map.entrySet()) {
+
+            FileInfo fileInfo = entry.getValue();
+            assert fileInfo != null;
+
+            if (fileInfo.getMd5() != null) {
+                num++;
+            }
+        }
+        return num;
+    }
 
     private boolean checkIfModified(Node launcherNode, String path, final XTriggerLog log, final Map<String, FileInfo> newMd5Map) throws XTriggerException {
 
@@ -303,7 +316,7 @@ public class FolderContentTrigger extends AbstractTrigger {
         }
 
         //There are more or fewer files
-        if (!excludeCheckFewerOrMoreFiles && this.md5Map.size() != newMd5Map.size()) {
+        if (!excludeCheckFewerOrMoreFiles && getNumFiles(this.md5Map) != getNumFiles(newMd5Map)) {
             log.info("The folder '" + new File(path) + "' content has changed.");
             return true;
         }
