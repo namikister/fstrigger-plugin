@@ -49,7 +49,7 @@ public class XMLFileContent extends FSTriggerContentFileType {
 
     @Override
     public void setMemoryInfo(Object memoryInfo) {
-        if ((memoryInfo != null) && !(memoryInfo instanceof List)) {
+        if ((memoryInfo != null) && !(memoryInfo instanceof Map)) {
             throw new IllegalArgumentException(String.format("The memory info %s object is not a Map object.", memoryInfo));
         }
         this.results = (Map) memoryInfo;
@@ -149,7 +149,6 @@ public class XMLFileContent extends FSTriggerContentFileType {
 
         }
 
-
         return false;
     }
 
@@ -178,7 +177,7 @@ public class XMLFileContent extends FSTriggerContentFileType {
          * @param value the xpath
          * @return the form validation object
          */
-        public FormValidation doCheckXPath(@QueryParameter String value) {
+        public FormValidation doCheckXpath(@QueryParameter String value) {
 
             if (value == null || value.trim().isEmpty()) {
                 return FormValidation.error("You must provide an XPath.");
